@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      em {
+        color: red;
+        font-style: normal;
+      }
+      button {
+        width: 100px;
+        height: 200px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <button></button>
+</html>
+$stringBook='<input type="submit" value="Book now" name="Booknow" id="Booknow"/>';
+$se='<style>
+#Booknow{
+  margin-left:650px;
+  padding: 20px 20px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 0 5px #696969;
+ }
+#Booknow:active{
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>';
+echo $stringBook;
+echo $se;
+
+
+
+
+<?
+$sql = "SELECT t_no FROM Location WHERE t_name = '$Location'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$email=$_SESSION['user_info'];
+$query="UPDATE Customer SET t_no='$row[t_no]' WHERE email='$email';";
+  if(mysqli_query($conn, $query))
+{  
+  $message = "Spot booked successfully";
+}
+  else {
+    $message="Transaction failed";
+  }
+  echo "<script type='text/javascript'>alert('$message');</script>";
+}
+?>
+
+-- script in booktkt.php
+  <script type="text/javascript">
+    function validate() {
+      var trains=document.getElementById("trains");
+      if(trains.selectedIndex==0)
+      {
+        alert("Please select your Location");
+        trains.focus();
+        return false;   
+      }
+    }
+  </script>
+  ---------pnr
+  <?php 
+session_start();
+$conn = mysqli_connect("localhost","root","","Customer");
+if(!$conn){  
+  echo "<script type='text/javascript'>alert('Database failed');</script>";
+    die('Could not connect: '.mysqli_connect_error());  
+}
+if (isset($_POST['submit']))
+{
+$pnr=$_POST['pnr'];
+$sql = "SELECT t_status FROM tickets WHERE PNR= '$pnr'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+  if($row==NULL)  echo "<script type='text/javascript'>alert('Booking ID not found');</script>";
+  else echo "<script type='text/javascript'>alert('Your status is ' +'$row[t_status]');</script>";  
+}
+if (isset($_POST['cancel']))
+{
+$pnr=$_POST['pnr'];
+$sql = "DELETE FROM tickets WHERE PNR=$pnr;";
+if(mysqli_query($conn, $sql))
+  echo "<script type='text/javascript'>alert('Your ticket has been cancelled');</script>";
+  else echo "<script type='text/javascript'>alert('Cancellation failed');</script>";  
+}
+?>
+----
+--color2: #ec585c;
+  --color3: #e7d155;
+  --color4: #56a8c6;
+  
+  --background: #e4ede8;
+  --color1: #1a1503;
+  --color2: #0d0a01;
+  --color3: #141c09;
+  --color4: #1e1f1e;
+}
